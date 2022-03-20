@@ -6,7 +6,6 @@ import axios from "../../axios-orders";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import order from "../../components/Order/Order";
 
 class Orders extends Component {
   componentDidMount() {
@@ -15,18 +14,16 @@ class Orders extends Component {
 
   render() {
     let orders = <Spinner />;
-    console.log(this.props.loading);
     if (!this.props.loading) {
-      {
-        orders = this.props.orders.map((order) => (
-          <Order
-            key={order.id}
-            ingredients={order.ingredients}
-            price={order.price}
-          />
-        ));
-      }
+      orders = this.props.orders.map((order) => (
+        <Order
+          key={order.id}
+          ingredients={order.ingredients}
+          price={order.price}
+        />
+      ));
     }
+
     return <div>{orders}</div>;
   }
 }
@@ -42,7 +39,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchOrders: (token,userId) => dispatch(actions.fetchOrders(token,userId)),
+    onFetchOrders: (token, userId) =>
+      dispatch(actions.fetchOrders(token, userId)),
   };
 };
 
