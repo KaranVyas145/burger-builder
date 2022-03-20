@@ -10,7 +10,7 @@ import order from "../../components/Order/Order";
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.onFetchOrders(this.props.token);
+    this.props.onFetchOrders(this.props.token, this.props.userId);
   }
 
   render() {
@@ -18,12 +18,12 @@ class Orders extends Component {
     console.log(this.props.loading);
     if (!this.props.loading) {
       {
-      orders=  this.props.orders.map((order) => (
+        orders = this.props.orders.map((order) => (
           <Order
             key={order.id}
             ingredients={order.ingredients}
             price={order.price}
-          /> 
+          />
         ));
       }
     }
@@ -35,13 +35,14 @@ const mapStateToProps = (state) => {
   return {
     orders: state.order.orders,
     loading: state.order.loading,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchOrders: (token) => dispatch(actions.fetchOrders(token)),
+    onFetchOrders: (token,userId) => dispatch(actions.fetchOrders(token,userId)),
   };
 };
 
